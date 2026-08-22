@@ -89,7 +89,8 @@ function Side({ data, ours }) {
    continuous amber rule marks the column that matters. ─────────────────────────────────────── */
 function Ledger({ emphasis, sticky, stacked }) {
   const oursEdge = '1px solid var(--line-hairline)';
-  const oursFill = emphasis === 'tint' ? 'var(--vv-blue-08)' : 'transparent';
+  // On mobile, remove background tint from table cells
+  const oursFill = stacked ? 'transparent' : (emphasis === 'tint' ? 'var(--vv-blue-08)' : 'transparent');
   const head = { ...LABEL, padding: '22px 0 20px', borderBottom: '1px solid var(--vv-ice-24)', display: 'flex', alignItems: 'center', gap: 12, ...(sticky ? { position: 'sticky', top: 0, zIndex: 2, background: 'var(--vv-navy-72)', backdropFilter: 'blur(10px)' } : null) };
   const pad = 'clamp(20px, 2.2vw, 32px)';
   const cell = { padding: `28px 0`, borderBottom: '1px solid var(--line-hairline)' };
@@ -143,9 +144,9 @@ function CmpCard({ row, stacked }) {
   const [hot, setHot] = React.useState(false);
   const oursEdge = '1px solid var(--line-hairline)';
   return (
-    <Bezel accent={false} chamfer={16} weight={1} pad="clamp(24px, 2.4vw, 30px)"
-      color={hot ? 'var(--vv-ice-14)' : 'var(--line-hairline)'}
-      fill={hot ? 'rgba(218,232,242,0.05)' : 'rgba(218,232,242,0.02)'}
+    <Bezel accent={false} chamfer={stacked ? 0 : 16} weight={1} pad={stacked ? '24px 0' : 'clamp(24px, 2.4vw, 30px)'}
+      color={stacked ? 'transparent' : (hot ? 'var(--vv-ice-14)' : 'var(--line-hairline)')}
+      fill={stacked ? 'transparent' : (hot ? 'rgba(218,232,242,0.05)' : 'rgba(218,232,242,0.02)')}
       onMouseEnter={() => setHot(true)} onMouseLeave={() => setHot(false)}
       style={{ transition: 'none', height: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18, height: '100%' }}>

@@ -1382,6 +1382,17 @@ Object.assign(__ds_scope, { Switch });
 // components/navigation/Footer.jsx
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function useFooterNarrow(q) {
+  const [hit, setHit] = React.useState(false);
+  React.useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${q}px)`);
+    const on = () => setHit(mq.matches);
+    on();
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [q]);
+  return hit;
+}
 function Footer({
   markSrc,
   columns = [],
@@ -1390,18 +1401,20 @@ function Footer({
   style,
   ...rest
 }) {
+  const mobile = useFooterNarrow(640);
   return /*#__PURE__*/React.createElement("footer", _extends({
     style: {
       background: 'var(--bloom-base)',
       backgroundColor: 'transparent',
-      padding: '64px var(--gutter-site) 40px',
+      padding: mobile ? '48px var(--gutter-site) 32px' : '64px var(--gutter-site) 40px',
       boxSizing: 'border-box',
       ...style
     }
   }, rest), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
-      gap: 80,
+      flexDirection: mobile ? 'column' : 'row',
+      gap: mobile ? 40 : 80,
       flexWrap: 'wrap',
       alignItems: 'flex-start'
     }
@@ -1410,7 +1423,8 @@ function Footer({
       display: 'flex',
       flexDirection: 'column',
       gap: 18,
-      minWidth: 220
+      minWidth: mobile ? 0 : 220,
+      width: mobile ? '100%' : undefined
     }
   }, markSrc ? /*#__PURE__*/React.createElement("img", {
     src: markSrc,
@@ -1440,10 +1454,11 @@ function Footer({
   }, tagline) : null), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
-      gap: 72,
+      gap: mobile ? 32 : 72,
       flexWrap: 'wrap',
-      flex: 1,
-      justifyContent: 'flex-end'
+      flex: mobile ? undefined : 1,
+      justifyContent: mobile ? 'flex-start' : 'flex-end',
+      width: mobile ? '100%' : undefined
     }
   }, columns.map(c => /*#__PURE__*/React.createElement("div", {
     key: c.label,
@@ -1451,7 +1466,7 @@ function Footer({
       display: 'flex',
       flexDirection: 'column',
       gap: 14,
-      minWidth: 130
+      minWidth: mobile ? 0 : 130
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
@@ -1466,15 +1481,17 @@ function Footer({
     href: l.href || '#',
     style: {
       fontSize: 13.5,
-      color: 'var(--text-secondary)'
+      color: 'var(--text-secondary)',
+      textDecoration: 'none'
     }
   }, l.label)))))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
+      flexDirection: mobile ? 'column' : 'row',
       justifyContent: 'space-between',
       flexWrap: 'wrap',
-      gap: 16,
-      marginTop: 72,
+      gap: mobile ? 8 : 16,
+      marginTop: mobile ? 40 : 72,
       paddingTop: 0
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -2341,9 +2358,11 @@ function SectionFrame({
   // stacked single-column section is not harmed by the wider inset: it is already floored and
   // ceilinged. If a section ever genuinely needs a tighter floor, pass `padX` — explicitly, and
   // identically to its siblings — rather than deriving it from a breakpoint.
-  const padXFit = `max(${padX}, min(${padGrowMax}, calc((${CONTENT_W} - ${padRef}) / 2)))`;
+  // When stacked on mobile, the chamfered border is removed and the frame padding resets to 0
+  // so the content aligns flush with the shared page gutter (--gutter-site).
+  const padXFit = stacked ? '0px' : `max(${padX}, min(${padGrowMax}, calc((${CONTENT_W} - ${padRef}) / 2)))`;
   // Balanced by default: the grown horizontal value on all four sides.
-  const padYFit = padY ?? padXFit;
+  const padYFit = stacked ? '0px' : (padY ?? padXFit);
   // Art hangs flush to the right padding, mirroring the copy on the left; `reserveInset` is
   // just the floor for narrow frames, where padding has stopped growing.
   const decorRight = `max(${reserveInset}, ${padXFit})`;
@@ -4380,11 +4399,11 @@ function CapPlate({
   const [hot, setHot] = React.useState(false);
   return /*#__PURE__*/React.createElement(Bezel, {
     accent: false,
-    chamfer: 16,
+    chamfer: fluid ? 0 : 16,
     weight: 1,
-    pad: "26px",
-    color: hot ? 'var(--vv-ice-14)' : 'var(--line-hairline)',
-    fill: hot ? 'rgba(218,232,242,0.05)' : 'rgba(218,232,242,0.02)',
+    pad: fluid ? '16px 0' : '26px',
+    color: fluid ? 'transparent' : (hot ? 'var(--vv-ice-14)' : 'var(--line-hairline)'),
+    fill: fluid ? 'transparent' : (hot ? 'rgba(218,232,242,0.05)' : 'rgba(218,232,242,0.02)'),
     onMouseEnter: () => setHot(true),
     onMouseLeave: () => setHot(false),
     style: {
@@ -4544,11 +4563,8 @@ function CapCta({
 }) {
   const [hot, setHot] = React.useState(false);
   return /*#__PURE__*/React.createElement("a", {
-    href: "#/autonomy",
-    onClick: e => {
-      e.preventDefault();
-      onNavigate && onNavigate('/autonomy');
-    },
+    href: "#models",
+    onClick: e => { e.preventDefault(); const el = document.getElementById('models'); if (el) el.scrollIntoView({ behavior: 'smooth' }); },
     onMouseEnter: () => setHot(true),
     onMouseLeave: () => setHot(false),
     style: {
@@ -4674,7 +4690,9 @@ function CapabilitiesSection({
     }
   }, /*#__PURE__*/React.createElement(SectionFrame, {
     copyMax: BIO_COPY_CAP,
-    stacked: stacked
+    stacked: stacked,
+    chamfer: stacked ? 0 : 44,
+    color: stacked ? 'transparent' : undefined
   }, copy)), /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: wide ? 'none' : 420,
@@ -4896,7 +4914,8 @@ function Ledger({
   stacked
 }) {
   const oursEdge = '1px solid var(--line-hairline)';
-  const oursFill = emphasis === 'tint' ? 'var(--vv-blue-08)' : 'transparent';
+  // On mobile, remove background tint from table cells
+  const oursFill = stacked ? 'transparent' : (emphasis === 'tint' ? 'var(--vv-blue-08)' : 'transparent');
   const head = {
     ...LABEL,
     padding: '22px 0 20px',
@@ -5041,11 +5060,11 @@ function CmpCard({
   const oursEdge = '1px solid var(--line-hairline)';
   return /*#__PURE__*/React.createElement(Bezel, {
     accent: false,
-    chamfer: 16,
+    chamfer: stacked ? 0 : 16,
     weight: 1,
-    pad: "clamp(24px, 2.4vw, 30px)",
-    color: hot ? 'var(--vv-ice-14)' : 'var(--line-hairline)',
-    fill: hot ? 'rgba(218,232,242,0.05)' : 'rgba(218,232,242,0.02)',
+    pad: stacked ? '24px 0' : 'clamp(24px, 2.4vw, 30px)',
+    color: stacked ? 'transparent' : (hot ? 'var(--vv-ice-14)' : 'var(--line-hairline)'),
+    fill: stacked ? 'transparent' : (hot ? 'rgba(218,232,242,0.05)' : 'rgba(218,232,242,0.02)'),
     onMouseEnter: () => setHot(true),
     onMouseLeave: () => setHot(false),
     style: {
@@ -5773,11 +5792,8 @@ function BioCta({
     } : null)
   };
   return /*#__PURE__*/React.createElement("a", {
-    href: "#/about",
-    onClick: e => {
-      e.preventDefault();
-      onNavigate && onNavigate('/about');
-    },
+    href: "#about",
+    onClick: e => e.preventDefault(),
     onMouseEnter: () => setHot(true),
     onMouseLeave: () => setHot(false),
     style: base
@@ -5886,11 +5902,10 @@ function HomeScreen({
     variant: "primary",
     size: "lg",
     icon: "arrow_forward",
-    onClick: () => onNavigate('/autonomy')
+    onClick: () => { const el = document.getElementById('models'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
   }, "Explore autonomy"), /*#__PURE__*/React.createElement(Button, {
     variant: "secondary",
-    size: "lg",
-    onClick: () => onNavigate('/contact')
+    size: "lg"
   }, "Contact us"))))), /*#__PURE__*/React.createElement("section", {
     style: {
       padding: 'clamp(40px, 4.4vw, 64px) var(--gutter-site)',
@@ -5923,6 +5938,8 @@ function HomeScreen({
     copyMax: BIO_COPY_CAP,
     reserve: stacked ? undefined : BIO_MARK_W,
     gap: 18,
+    chamfer: stacked ? 0 : 44,
+    color: stacked ? 'transparent' : undefined,
     stacked: stacked,
     columnMinHeight: "clamp(300px, 23vw, 380px)",
     decor: stacked ? null : bioMark,
@@ -6181,8 +6198,7 @@ function HomeScreen({
   }, "Legitimate Autonomy"), ", on the Hardware You Already Field"), /*#__PURE__*/React.createElement(Button, {
     variant: "primary",
     size: "lg",
-    icon: "arrow_forward",
-    onClick: () => onNavigate('/contact')
+    icon: "arrow_forward"
   }, "Contact us")) :
   /*#__PURE__*/
   /* Same frame as the two copy sections — it shares their 44px chamfer, so it has to
@@ -6190,10 +6206,10 @@ function HomeScreen({
      this frame's content is a full-width grid (copy left, button right); the inner
      copy column keeps its own measure. */
   React.createElement(SectionFrame, {
-    accent: true,
-    chamfer: 44,
+    accent: !stacked,
+    chamfer: stacked ? 0 : 44,
     weight: 1,
-    color: "var(--vv-ice-14)",
+    color: stacked ? 'transparent' : "var(--vv-ice-14)",
     stacked: stacked,
     contentStyle: {
       maxWidth: '100%'
@@ -6202,7 +6218,7 @@ function HomeScreen({
     plateOpacity: 0.12,
     plateShift: "clamp(40px, 26vw, 380px)",
     plateScale: 1.3,
-    fill: "rgba(218,232,242,0.02)"
+    fill: stacked ? 'transparent' : "rgba(218,232,242,0.02)"
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
@@ -6252,8 +6268,7 @@ function HomeScreen({
   }, /*#__PURE__*/React.createElement(Button, {
     variant: "primary",
     size: "lg",
-    icon: "arrow_forward",
-    onClick: () => onNavigate('/contact')
+    icon: "arrow_forward"
   }, "Contact us")))))));
 }
 Object.assign(window, {
@@ -6839,29 +6854,22 @@ function Site() {
     Footer,
     Toast
   } = DS();
-  const [route, setRoute] = React.useState('/');
+  // Route is permanently fixed — all routing is disabled
+  const route = '/';
   const [toast, setToast] = React.useState(null);
   React.useEffect(() => {
     if (!toast) return;
     const t = setTimeout(() => setToast(null), 4200);
     return () => clearTimeout(t);
   }, [toast]);
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [route]);
+  // Autonomy and About retain their text labels but do not navigate
   const links = [{
-    href: '/autonomy',
     label: 'Autonomy'
   }, {
-    href: '/about',
     label: 'About'
   }];
-  const Screen = {
-    '/': HomeScreen,
-    '/autonomy': PlatformScreen,
-    '/about': ResearchScreen,
-    '/contact': BriefingScreen
-  }[route] || HomeScreen;
+  // Always render HomeScreen — no sub-page routing
+  const Screen = HomeScreen;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
@@ -6873,20 +6881,19 @@ function Site() {
       position: 'sticky',
       top: 0,
       zIndex: 20,
-      height: route === '/' ? 0 : undefined
+      height: 0
     }
   }, /*#__PURE__*/React.createElement(NavBar, {
     logoSrc: "./assets/vivum-logo-gray.svg",
     links: links,
     activeHref: route,
-    transparent: route === '/',
-    onNavigate: href => setRoute(href || '/'),
+    transparent: true,
+    // onNavigate is intentionally omitted — all nav clicks are disabled
     cta: {
-      label: 'Contact us',
-      onClick: () => setRoute('/contact')
+      label: 'Contact us'
     }
   })), /*#__PURE__*/React.createElement(Screen, {
-    onNavigate: setRoute,
+    onNavigate: () => {},
     onToast: setToast
   }), /*#__PURE__*/React.createElement(Footer, {
     markSrc: "./assets/vivum-logo-gray.svg",

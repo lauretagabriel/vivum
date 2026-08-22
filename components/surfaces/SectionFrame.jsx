@@ -91,9 +91,11 @@ export function SectionFrame({
   // stacked single-column section is not harmed by the wider inset: it is already floored and
   // ceilinged. If a section ever genuinely needs a tighter floor, pass `padX` — explicitly, and
   // identically to its siblings — rather than deriving it from a breakpoint.
-  const padXFit = `max(${padX}, min(${padGrowMax}, calc((${CONTENT_W} - ${padRef}) / 2)))`;
+  // When stacked on mobile, the chamfered border is removed and the frame padding resets to 0
+  // so the content aligns flush with the shared page gutter (--gutter-site).
+  const padXFit = stacked ? '0px' : `max(${padX}, min(${padGrowMax}, calc((${CONTENT_W} - ${padRef}) / 2)))`;
   // Balanced by default: the grown horizontal value on all four sides.
-  const padYFit = padY ?? padXFit;
+  const padYFit = stacked ? '0px' : (padY ?? padXFit);
   // Art hangs flush to the right padding, mirroring the copy on the left; `reserveInset` is
   // just the floor for narrow frames, where padding has stopped growing.
   const decorRight = `max(${reserveInset}, ${padXFit})`;

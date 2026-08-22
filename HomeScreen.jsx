@@ -78,7 +78,7 @@ function BioCta({ variant, corner, onNavigate }) {
     ...(variant === 'boxed' ? { padding: '11px 18px', border: `1px solid ${hot ? 'var(--vv-amber)' : 'var(--vv-ice-08)'}` } : null),
   };
   return (
-    <a href="#/about" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('/about'); }}
+    <a href="#about" onClick={(e) => e.preventDefault()}
       onMouseEnter={() => setHot(true)} onMouseLeave={() => setHot(false)} style={base}>
       Read about us
       <span aria-hidden="true" style={{ fontSize: '1.05em', lineHeight: 1, transform: hot ? 'translateX(3px)' : 'none', transition: 'transform 160ms ease' }}>&rarr;</span>
@@ -125,9 +125,10 @@ function HomeScreen({ onNavigate }) {
           <p style={{ margin: 0, fontSize: 'clamp(17px, 1.35vw, 20px)', lineHeight: 1.5, color: 'var(--vv-ice-82)', maxWidth: 620 }}>
             Using Evolutionary AI to power a new generation of intelligent, self-optimizing autonomous systems across all domains.
           </p>
-          <div style={{ display: 'flex', gap: 12, marginTop: 'clamp(14px, 1.4vw, 24px)' }}>
-            <Button variant="primary" size="lg" icon="arrow_forward" onClick={() => onNavigate('/autonomy')}>Explore autonomy</Button>
-            <Button variant="secondary" size="lg" onClick={() => onNavigate('/contact')}>Contact us</Button>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 'clamp(14px, 1.4vw, 24px)' }}>
+            {/* Explore autonomy smooth-scrolls to the #models section; no page navigation */}
+            <Button variant="primary" size="lg" icon="arrow_forward" onClick={() => { const el = document.getElementById('models'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}>Explore autonomy</Button>
+            <Button variant="secondary" size="lg">Contact us</Button>
           </div>
         </div>
         </div>
@@ -155,6 +156,7 @@ function HomeScreen({ onNavigate }) {
            total MINUS the frame's now-larger balanced padding: the frame keeps the height it
            always had instead of growing by the padding it gained. */}
         <SectionFrame copyMax={BIO_COPY_CAP} reserve={stacked ? undefined : BIO_MARK_W} gap={18}
+          chamfer={stacked ? 0 : 44} color={stacked ? 'transparent' : undefined}
           stacked={stacked} columnMinHeight="clamp(300px, 23vw, 380px)" decor={stacked ? null : bioMark}
           before={stacked ? <div style={{ marginBottom: 'clamp(24px, 5vw, 40px)' }}>{bioMark}</div> : null}
           after={<>
@@ -248,18 +250,19 @@ function HomeScreen({ onNavigate }) {
               <h2 style={{ margin: 0, fontSize: 'clamp(26px, 2.5vw, 36px)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: 'var(--vv-ice)', maxWidth: 780, textWrap: 'balance' }}>
                 <span style={{ color: 'var(--vv-amber)' }}>Legitimate Autonomy</span>, on the Hardware You Already Field
               </h2>
-              <Button variant="primary" size="lg" icon="arrow_forward" onClick={() => onNavigate('/contact')}>Contact us</Button>
+              <Button variant="primary" size="lg" icon="arrow_forward">Contact us</Button>
             </div>
           ) : (
             /* Same frame as the two copy sections — it shares their 44px chamfer, so it has to
                share their padding and left edge too. `contentStyle` lifts the copy cap because
                this frame's content is a full-width grid (copy left, button right); the inner
                copy column keeps its own measure. */
-            <SectionFrame accent chamfer={44} weight={1} color="var(--vv-ice-14)" stacked={stacked}
+            <SectionFrame accent={!stacked} chamfer={stacked ? 0 : 44} weight={1}
+              color={stacked ? 'transparent' : 'var(--vv-ice-14)'} stacked={stacked}
               contentStyle={{ maxWidth: '100%' }}
               plateSrc={t.ctaPlate ? './assets/plates/biological-intelligence.mp4' : undefined}
               plateOpacity={0.12} plateShift="clamp(40px, 26vw, 380px)" plateScale={1.3}
-              fill="rgba(218,232,242,0.02)">
+              fill={stacked ? 'transparent' : 'rgba(218,232,242,0.02)'}>
               <div style={{ display: 'grid', gridTemplateColumns: stacked ? 'minmax(0, 1fr)' : 'minmax(0, 1fr) auto', columnGap: 'clamp(36px, 5vw, 88px)', rowGap: 'clamp(28px, 3.4vw, 40px)', alignItems: 'center' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 16, maxWidth: 720 }}>
                   <h2 style={{ margin: 0, fontSize: 'clamp(26px, 2.5vw, 36px)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15, color: 'var(--vv-ice)', textWrap: 'balance' }}>
@@ -271,7 +274,7 @@ function HomeScreen({ onNavigate }) {
                   {t.ctaSecond !== false ? <QuietLink href="#evolutionary" label="Read the technical overview" /> : null}
                 </div>
                 <div style={{ display: 'flex', justifyContent: stacked ? 'flex-start' : 'flex-end' }}>
-                  <Button variant="primary" size="lg" icon="arrow_forward" onClick={() => onNavigate('/contact')}>Contact us</Button>
+                  <Button variant="primary" size="lg" icon="arrow_forward">Contact us</Button>
                 </div>
               </div>
             </SectionFrame>

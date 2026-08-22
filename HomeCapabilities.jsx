@@ -72,9 +72,9 @@ function CapPlate({ item, tone, showIndex, fluid, wide }) {
   const { Icon, Bezel } = DS_C();
   const [hot, setHot] = React.useState(false);
   return (
-    <Bezel accent={false} chamfer={16} weight={1} pad="26px"
-      color={hot ? 'var(--vv-ice-14)' : 'var(--line-hairline)'}
-      fill={hot ? 'rgba(218,232,242,0.05)' : 'rgba(218,232,242,0.02)'}
+    <Bezel accent={false} chamfer={fluid ? 0 : 16} weight={1} pad={fluid ? '16px 0' : '26px'}
+      color={fluid ? 'transparent' : (hot ? 'var(--vv-ice-14)' : 'var(--line-hairline)')}
+      fill={fluid ? 'transparent' : (hot ? 'rgba(218,232,242,0.05)' : 'rgba(218,232,242,0.02)')}
       onMouseEnter={() => setHot(true)} onMouseLeave={() => setHot(false)}
       style={{ transition: 'none', height: '100%' }}>
       {/* Icon leads the row, copy sits to its right — the icon column is a fixed track so
@@ -127,7 +127,7 @@ function SpineList({ tone, showIndex, fluid, wide }) {
 function CapCta({ onNavigate }) {
   const [hot, setHot] = React.useState(false);
   return (
-    <a href="#/autonomy" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('/autonomy'); }}
+    <a href="#" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate(''); }}
       onMouseEnter={() => setHot(true)} onMouseLeave={() => setHot(false)}
       style={{ display: 'inline-flex', alignItems: 'center', gap: 9, alignSelf: 'flex-start', paddingTop: 10, fontSize: 'clamp(15px, 1.2vw, 17px)', fontWeight: 400, lineHeight: 1, textDecoration: 'none', whiteSpace: 'nowrap', color: hot ? 'var(--vv-amber)' : 'var(--vv-graphite)', transition: 'color 160ms ease' }}>
       Explore autonomy
@@ -187,7 +187,8 @@ function CapabilitiesSection({ extraTweaks, onNavigate }) {
             {/* Same frame component as the Biological Intelligence section, so the chamfer,
                hairline, padding and copy measure are one recipe rather than two that have to
                be kept in sync by hand. */}
-            <SectionFrame copyMax={BIO_COPY_CAP} stacked={stacked}>
+            <SectionFrame copyMax={BIO_COPY_CAP} stacked={stacked}
+              chamfer={stacked ? 0 : 44} color={stacked ? 'transparent' : undefined}>
               {copy}
             </SectionFrame>
           </div>
