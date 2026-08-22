@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivum AI — Evolutionary AI for Legitimate Autonomy</title>
+  <meta name="description" content="Using Evolutionary AI to power a new generation of intelligent, self-optimizing autonomous systems across all domains: air, land, sea, space, and the edge.">
+  <link rel="icon" type="image/svg+xml" href="./assets/vivum-mark.svg">
+  
+  <!-- Preconnect & Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+  <!-- Global Design System Tokens & Base Styles -->
+  <link rel="stylesheet" href="./styles.css">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #001121;
+      overflow-x: clip;
+      color: var(--text-body, #DAE8F2);
+      font-family: var(--font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    #root {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React 18 & ReactDOM 18 (Local vendor files for offline / file:// protocol support, with CDN fallback) -->
+  <script src="./vendor/react.production.min.js"></script>
+  <script>
+    if (typeof React === 'undefined') {
+      document.write('<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"><\/script>');
+    }
+  </script>
+  <script src="./vendor/react-dom.production.min.js"></script>
+  <script>
+    if (typeof ReactDOM === 'undefined') {
+      document.write('<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"><\/script>');
+    }
+  </script>
+
+  <!-- Design System Compiled Bundle (Contains all components & compiled screens) -->
+  <script src="./_ds_bundle.js"></script>
+  <script src="./_dev/ds-ready.js" data-base="."></script>
+
+  <!-- Direct Application Mounting (Instant, offline & file:// compatible without Babel/fetch dependencies) -->
+  <script>
+    (function () {
+      function renderApp() {
+        var rootEl = document.getElementById('root');
+        if (!rootEl) return;
+        var SiteComponent = window.Site || (window.VivumDS && window.VivumDS.Site) || (window.VivumAIDesignSystem_b2be15 && window.VivumAIDesignSystem_b2be15.Site);
+        if (SiteComponent && window.ReactDOM && window.React) {
+          ReactDOM.createRoot(rootEl).render(React.createElement(SiteComponent));
+        } else if (window.vvReady) {
+          window.vvReady().then(function (ns) {
+            var Comp = window.Site || (ns && ns.Site);
+            if (Comp && window.ReactDOM && window.React) {
+              ReactDOM.createRoot(rootEl).render(React.createElement(Comp));
+            }
+          }).catch(function (err) {
+            console.error("Mount error:", err);
+          });
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderApp);
+      } else {
+        renderApp();
+      }
+    })();
+  </script>
+</body>
+</html>

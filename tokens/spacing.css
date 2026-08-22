@@ -1,0 +1,34 @@
+/* Vivum AI — spacing. 4px base, 8px grid in product UI. */
+:root {
+  --space-0: 0px;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 96px;
+  --space-11: 128px;
+  --space-12: 160px;
+
+  /* Layout */
+  --gutter-page: 32px;         /* product UI page gutter */
+  /* Fluid, not fixed: at 80px flat a phone spends 160px of a 390px screen on margins.
+     Tracks 5.5vw between a 20px floor and the 80px desktop figure, so every marketing
+     section narrows together instead of each one patching itself. */
+  --gutter-site: clamp(20px, 5.5vw, 80px); /* @kind spacing */
+  --container-site: 1560px;
+  --container-prose: 720px;
+  --panel-pad: 24px;
+  --panel-pad-lg: 32px;
+
+  /* Slides (1920×1080) */
+  --slide-pad-x: 100px;
+  --slide-pad-top: 100px;
+  --slide-pad-bottom: 80px;
+  --slide-gap-title: 52px;
+  --slide-gap-item: 28px;
+}

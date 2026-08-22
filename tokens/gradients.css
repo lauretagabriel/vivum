@@ -1,0 +1,108 @@
+/* Vivum AI — gradient system.
+   The signature surface is a deep navy field lit from above: #082036 into #001121.
+   Every gradient below is built from that pair; only gradients may introduce the
+   three transition navies (--vv-grad-mid / -lift / -abyss) — never as flat fills.
+
+   Video is the brand's preferred backdrop. Pair a muted, looping plate with one of
+   the --scrim-* overlays and set the type on top; the scrim, not the video, carries
+   legibility. Target 4.5:1 for body copy against the darkest region of the plate. */
+:root {
+  /* Gradient-only navies */
+  --vv-grad-top: #082036;    /* the lit stop */
+  --vv-grad-base: #001121;   /* the canvas stop */
+  --vv-grad-mid: #04182A;    /* halfway, for long ramps */
+  --vv-grad-lift: #0E3A5C;   /* deepest allowed lift, aperture cores only */
+  --vv-grad-abyss: #000B15;  /* below-canvas, for bottom edges */
+
+  /* ── 01 · Signature Field — covers, section openers, hero art.
+        Radial from top center. Never from a corner. ───────────── */
+  --grad-signature: radial-gradient(circle farthest-corner at 50% -10%, #082036 0%, #001121 76%); /* @kind other */
+
+  /* ── 02 · Deep Horizon — long vertical ramp for full pages and
+        long scrolls; darkest at the fold. ─────────────────────── */
+  --grad-horizon: linear-gradient(180deg, #082036 0%, #04182A 52%, #001121 100%); /* @kind other */
+
+  /* ── 03 · Sensor Sweep — asymmetric diagonal, edge-darkened.
+        Split layouts where content sits right of centre. ──────── */
+  --grad-sweep: linear-gradient(105deg, #001121 0%, #082036 46%, #04182A 72%, #001121 100%); /* @kind other */
+
+  /* ── 04 · Depth Well — light from below. Footers, closing
+        slides, anything that should feel like it is sinking. ──── */
+  --grad-well: radial-gradient(circle farthest-corner at 50% 118%, #082036 0%, #001121 68%); /* @kind other */
+
+  /* ── 05 · Aperture — a single blue bloom off-centre. One per
+        page maximum; the bloom is the focal point. ───────────── */
+  --grad-aperture: radial-gradient(circle farthest-side at 22% 18%, #0E3A5C 0%, #082036 38%, #001121 82%); /* @kind other */
+
+  /* ── 06 · Ember — the rare amber-lit field. CTA bands and
+        launch moments only; amber stays under 10% opacity. ───── */
+  --grad-ember: radial-gradient(circle farthest-side at 84% -10%, rgba(236, 154, 0, 0.16) 0%, rgba(8, 32, 54, 0.9) 42%, #001121 78%); /* @kind other */
+
+  /* ── 07 · Twin Aperture — two blooms, blue and amber, for wide
+        16:9 art and title cards. ─────────────────────────────── */
+  --grad-twin: radial-gradient(circle farthest-side at 14% 6%, rgba(40, 129, 181, 0.34) 0%, rgba(8, 32, 54, 0) 62%), radial-gradient(circle farthest-side at 92% 96%, rgba(236, 154, 0, 0.12) 0%, rgba(8, 32, 54, 0) 58%), linear-gradient(180deg, #082036 0%, #001121 100%); /* @kind other */
+
+  /* ── 08 · Strata — banded field, hard-edged. Data-dense pages
+        and table headers that need a horizon line. ───────────── */
+  --grad-strata: linear-gradient(180deg, #082036 0%, #082036 34%, #04182A 34%, #04182A 62%, #001121 62%, #001121 100%); /* @kind other */
+
+  /* ── 09 · Abyss Edge — canvas that seals to black at the
+        bottom edge. Full-bleed page ends, print covers. ──────── */
+  --grad-abyss: linear-gradient(180deg, #04182A 0%, #001121 58%, #000B15 100%); /* @kind other */
+
+  /* ── Section blooms ─ the seamless separator system.
+        Every bloom ENDS AT TRANSPARENT, so it composites over the
+        --surface-canvas body instead of painting its own band. Each one is
+        a PERFECT CIRCLE, never an ellipse: two percentage radii resolve against width and
+        height separately, so the same token reads as a wide oval on a short section.
+        `circle closest-side` sizes the reference circle to the largest that fits its box, and
+        every stop list still ENDS AT ZERO ON 100% of that radius — never past it. A stop
+        beyond 100% would put the transparent end outside the box, which cuts the bloom off
+        mid-falloff at the section edge and shows as a seam where two sections meet.
+        The doubling is done by pushing the falloff's MIDPOINT outward, not by holding peak
+        alpha flat: a flat core renders as a hard-edged disc, and the stop where flat meets
+        ramp is a first-derivative break that shows as a Mach ring — both the opposite of a
+        lit background. One smooth ramp per bloom, no plateau.
+        The accent-hued sub-blooms (amber in --bloom-signal, blue in --bloom-data) stay at
+        their own ceilings rather than the navy's peak: a large amber fill above ~0.1 stops
+        reading as light and starts competing with amber type and CTAs. Keeping it
+        box-relative — no viewport units — means a bloom scales with whatever section it lands
+        on, and stacked sections never hard-cut. */
+  --bloom-crest: radial-gradient(circle closest-side at 50% 30%, rgba(8, 32, 54, 0.4) 0%, rgba(8, 32, 54, 0.18) 45%, rgba(8, 32, 54, 0.05) 72%, rgba(8, 32, 54, 0) 100%); /* @kind other */
+  --bloom-base: radial-gradient(circle closest-side at 50% 70%, rgba(8, 32, 54, 0.4) 0%, rgba(8, 32, 54, 0.18) 45%, rgba(8, 32, 54, 0.05) 72%, rgba(8, 32, 54, 0) 100%); /* @kind other */
+  --bloom-left: radial-gradient(circle closest-side at 20% 50%, rgba(14, 58, 92, 0.4) 0%, rgba(11, 45, 73, 0.19) 45%, rgba(8, 32, 54, 0.05) 72%, rgba(8, 32, 54, 0) 100%); /* @kind other */
+  --bloom-right: radial-gradient(circle closest-side at 80% 50%, rgba(14, 58, 92, 0.4) 0%, rgba(11, 45, 73, 0.19) 45%, rgba(8, 32, 54, 0.05) 72%, rgba(8, 32, 54, 0) 100%); /* @kind other */
+  --bloom-core: radial-gradient(circle closest-side at 50% 50%, rgba(8, 32, 54, 0.4) 0%, rgba(8, 32, 54, 0.18) 45%, rgba(8, 32, 54, 0.05) 72%, rgba(8, 32, 54, 0) 100%); /* @kind other */
+  --bloom-data: radial-gradient(circle closest-side at 26% 32%, rgba(40, 129, 181, 0.1) 0%, rgba(40, 129, 181, 0.045) 45%, rgba(40, 129, 181, 0.012) 72%, rgba(40, 129, 181, 0) 100%), radial-gradient(circle closest-side at 64% 64%, rgba(8, 32, 54, 0.4) 0%, rgba(8, 32, 54, 0.18) 45%, rgba(8, 32, 54, 0.05) 72%, rgba(8, 32, 54, 0) 100%); /* @kind other */
+  --bloom-signal: radial-gradient(circle closest-side at 76% 30%, rgba(236, 154, 0, 0.09) 0%, rgba(236, 154, 0, 0.04) 45%, rgba(236, 154, 0, 0.011) 72%, rgba(236, 154, 0, 0) 100%), radial-gradient(circle closest-side at 42% 60%, rgba(8, 32, 54, 0.4) 0%, rgba(8, 32, 54, 0.18) 45%, rgba(8, 32, 54, 0.05) 72%, rgba(8, 32, 54, 0) 100%); /* @kind other */
+
+  /* ── Video scrims — overlay a looping plate, text sits above ─ */
+  --scrim-bottom: linear-gradient(180deg, rgba(0, 17, 33, 0.12) 0%, rgba(8, 32, 54, 0.58) 46%, rgba(0, 17, 33, 0.94) 100%); /* @kind other */
+  --scrim-left: linear-gradient(90deg, rgba(0, 17, 33, 0.95) 0%, rgba(8, 32, 54, 0.66) 44%, rgba(0, 17, 33, 0.08) 100%); /* @kind other */
+  --scrim-vignette: radial-gradient(120% 120% at 50% 46%, rgba(0, 17, 33, 0.18) 0%, rgba(8, 32, 54, 0.62) 54%, rgba(0, 17, 33, 0.92) 100%); /* @kind other */
+  --scrim-flood: linear-gradient(180deg, rgba(0, 17, 33, 0.72) 0%, rgba(0, 17, 33, 0.86) 100%); /* @kind other */
+  --scrim-cinema: linear-gradient(180deg, #001121 0%, rgba(0, 17, 33, 0.2) 22%, rgba(0, 17, 33, 0.2) 74%, #001121 100%); /* @kind other */
+
+  /* Foot: lands the plate on the canvas instead of cutting against it, and doubles as the
+     backing for bottom-aligned type. Must reach the canvas colour at full opacity by 100% —
+     a scrim that stops at 0.94 leaves a visible seam where the section ends. */
+  --scrim-foot: linear-gradient(180deg, rgba(0, 17, 33, 0) 0%, rgba(0, 17, 33, 0.42) 30%, rgba(0, 17, 33, 0.76) 58%, rgba(0, 17, 33, 0.95) 82%, #001121 100%); /* @kind other */
+
+  /* ── Video plate treatment — fully desaturated, held at 10% so the
+        plate reads as texture in the navy rather than as footage ───── */
+  --plate-filter-base: grayscale(1) contrast(1.05); /* @kind other */
+  --plate-filter: grayscale(1) contrast(1.05) opacity(0.1); /* @kind other */
+
+  /* Alpha feather for a plate that must not show a rectangle: an ellipse on the box's
+     closest sides, fully transparent by 68% so the falloff finishes inside every edge.
+     Used as a mask-image by VideoBackdrop (circleMask) and Bezel (plateSrc) — one
+     definition so the two cannot drift apart. */
+  --plate-feather: radial-gradient(ellipse closest-side at 50% 50%, #000 0%, rgba(0, 0, 0, 0.88) 24%, rgba(0, 0, 0, 0.42) 46%, rgba(0, 0, 0, 0.12) 58%, rgba(0, 0, 0, 0) 68%); /* @kind other */
+
+  /* ── Hairline gradients — rules that fade out ──────────────── */
+  --grad-rule: linear-gradient(90deg, rgba(218, 232, 242, 0.28) 0%, rgba(218, 232, 242, 0) 100%); /* @kind other */
+  --grad-rule-accent: linear-gradient(90deg, #EC9A00 0%, rgba(236, 154, 0, 0) 100%); /* @kind other */
+
+  /* ── Light sheet — print and light product UI ──────────────── */
+  --grad-sheet: linear-gradient(180deg, #FFFFFF 0%, #DAE8F2 100%); /* @kind other */
+}
