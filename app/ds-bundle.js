@@ -2047,6 +2047,7 @@ function NavBar({
   logoSrc,
   logoAlt = 'Vivum',
   brand = 'VIVUM',
+  logoHref,
   links = [],
   activeHref,
   cta,
@@ -2139,11 +2140,11 @@ function NavBar({
       ...style
     }
   }, rest), /*#__PURE__*/React.createElement("a", {
-    href: "#",
+    href: logoHref || (typeof window !== 'undefined' && window.__VV_BASE) || './',
     "data-vv-boot": "",
     onClick: e => {
       e.preventDefault();
-      navigate(links[0] && links[0].href);
+      navigate(logoHref || '/');
     },
     style: {
       display: 'flex',
@@ -18593,6 +18594,7 @@ function Site({
     }
   }, /*#__PURE__*/React.createElement(NavBar, {
     logoSrc: "../../assets/vivum-logo-gray.svg",
+    logoHref: (typeof window !== 'undefined' && window.__VV_BASE) || './',
     links: links,
     activeHref: route,
     transparent: heroRoute,
