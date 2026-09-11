@@ -1,0 +1,88 @@
+/* Vivum AI — palette. Six colors, no more.
+   Nothing outside this list may appear as a flat fill or text color.
+   Tints are opacity of these same colors, never new hues. */
+:root {
+  /* ── Base palette ─────────────────────────────────────────── */
+  --vv-deep-navy: #001121;   /* primary canvas */
+  --vv-slate: #172C3F;       /* panels, tables */
+  --vv-amber: #EC9A00;       /* single accent */
+  --vv-blue: #2881B5;        /* labels, data, links */
+  --vv-graphite: #6E7E85;    /* captions, rules */
+  --vv-ice: #DAE8F2;         /* body text, light sheets */
+  --vv-white: #FFFFFF;       /* logo sheet only */
+
+  /* ── Ice tints (opacity of --vv-ice, for text on dark) ───── */
+  --vv-ice-92: rgba(218, 232, 242, 0.92);
+  --vv-ice-82: rgba(218, 232, 242, 0.82);
+  --vv-ice-72: rgba(218, 232, 242, 0.72);
+  --vv-ice-56: rgba(218, 232, 242, 0.56);
+  --vv-ice-24: rgba(218, 232, 242, 0.24);
+  --vv-ice-14: rgba(218, 232, 242, 0.14);
+  --vv-ice-08: rgba(218, 232, 242, 0.08);
+  --vv-ice-07: rgba(218, 232, 242, 0.07);   /* button wash */
+  --vv-ice-04: rgba(218, 232, 242, 0.04);
+
+  /* ── Blue tints ──────────────────────────────────────────── */
+  --vv-blue-24: rgba(40, 129, 181, 0.24);
+  --vv-blue-14: rgba(40, 129, 181, 0.14);
+  --vv-blue-08: rgba(40, 129, 181, 0.08);
+
+  /* ── Amber tints (highlight only, never a large fill) ────── */
+  --vv-amber-24: rgba(236, 154, 0, 0.24);
+  --vv-amber-14: rgba(236, 154, 0, 0.14);
+  --vv-amber-08: rgba(236, 154, 0, 0.08);
+  --vv-amber-07: rgba(236, 154, 0, 0.07);   /* button wash */
+
+  /* ── Navy tints (scrims, overlays) ───────────────────────── */
+  --vv-navy-94: rgba(0, 17, 33, 0.94);
+  --vv-navy-72: rgba(0, 17, 33, 0.72);
+  --vv-navy-48: rgba(0, 17, 33, 0.48);
+  --vv-navy-24: rgba(0, 17, 33, 0.24);
+  --vv-navy-07: rgba(0, 17, 33, 0.07);     /* button wash on ice sheets */
+
+  /* ── Semantic: surfaces ──────────────────────────────────── */
+  --surface-canvas: var(--vv-deep-navy);
+  --surface-panel: var(--vv-slate);
+  --surface-panel-quiet: var(--vv-ice-04);
+  --surface-sheet: var(--vv-ice);       /* print / light product UI */
+  --surface-logo: var(--vv-white);
+  --surface-raised: #082036;            /* gradient stop, doubles as raised panel */
+
+  /* ── Semantic: text on dark ──────────────────────────────── */
+  --text-heading: var(--vv-ice);
+  --text-body: var(--vv-ice-82);
+  --text-secondary: var(--vv-ice-72);
+  --text-caption: var(--vv-graphite);
+  --text-label: var(--vv-graphite);
+  --text-link: var(--vv-blue);
+  --text-link-hover: var(--vv-amber);
+  --text-accent: var(--vv-amber);
+  --text-data: var(--vv-blue);
+
+  /* ── Semantic: text on light sheets ──────────────────────── */
+  --text-heading-on-light: var(--vv-deep-navy);
+  --text-body-on-light: var(--vv-slate);
+  --text-caption-on-light: var(--vv-graphite);
+
+  /* ── Semantic: lines ─────────────────────────────────────── */
+  --line-hairline: var(--vv-ice-08);
+  --line-strong: var(--vv-ice-08);
+  --line-on-light: rgba(23, 44, 63, 0.16);
+  --line-accent: var(--vv-amber);
+
+  /* ── Semantic: interactive ───────────────────────────────── */
+  --action-primary-bg: var(--vv-amber);
+  --action-primary-fg: var(--vv-deep-navy);
+  --action-primary-bg-hover: #F0A81F;      /* amber at +6% lightness, hover only */
+  --action-secondary-fg: var(--vv-ice);
+  --action-secondary-line: var(--vv-ice-24);
+  --action-secondary-bg-hover: var(--vv-ice-08);
+  --action-quiet-fg: var(--vv-blue);
+  --focus-ring: var(--vv-blue);
+
+  /* ── Semantic: status (drawn from the same six) ──────────── */
+  --status-live: var(--vv-blue);
+  --status-attention: var(--vv-amber);
+  --status-idle: var(--vv-graphite);
+  --status-ok: var(--vv-ice);
+}

@@ -1,0 +1,50 @@
+/* Vivum AI — type. One family: Inter. Four weights: 400 / 500 / 600 / 700.
+   IBM Plex Mono carries specs, hex codes, coordinates, and telemetry only.
+   Tracking tightens as size grows. Body copy is never letterspaced. */
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ── Screen / product scale ──────────────────────────────── */
+  --size-display: 72px;
+  --size-h1: 56px;
+  --size-h2: 40px;
+  --size-h3: 28px;
+  --size-h4: 20px;
+  --size-lead: 20px;
+  --size-body: 16px;
+  --size-body-sm: 14px;
+  --size-caption: 13px;
+  --size-micro: 12px;
+
+  /* ── Slide scale (1920×1080). Nothing below 24px. ────────── */
+  --slide-hero: 92px;
+  --slide-title: 64px;
+  --slide-subtitle: 44px;
+  --slide-body: 34px;
+  --slide-small: 28px;
+  --slide-label: 24px;
+
+  /* ── Line heights ────────────────────────────────────────── */
+  --leading-tight: 1.0;
+  --leading-snug: 1.12;
+  --leading-heading: 1.2;
+  --leading-body: 1.5;
+  --leading-relaxed: 1.6;
+
+  /* ── Tracking ────────────────────────────────────────────── */
+  --track-hero: -0.035em;
+  --track-title: -0.02em;
+  --track-heading: -0.015em;
+  --track-body: 0em;
+  --track-label: 0.18em;   /* uppercase labels */
+  --track-mono: 0.02em;
+
+  /* ── Roles ───────────────────────────────────────────────── */
+  --type-label-transform: uppercase; /* @kind other */
+}
