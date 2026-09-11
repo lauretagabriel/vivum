@@ -40,7 +40,14 @@ function Site({ route = '/' }) {
        form back before looking it up. */
     if (!SITE_PAGES[path] && VV_ROUTE_BY_URL[path]) path = VV_ROUTE_BY_URL[path];
     const file = SITE_PAGES[path];
-    if (file && path !== route) window.location.href = file;
+    if (file) {
+      if (path !== route) {
+        window.location.href = file;
+      } else if (path === '/') {
+        // Refresh page when clicking logo while already on home page
+        window.location.reload();
+      }
+    }
   }, [route]);
   React.useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(null), 4200); return () => clearTimeout(t); }, [toast]);
   // Nav links, footer nav, legal links and CTAs stay visible but inert: their own handlers
@@ -79,7 +86,7 @@ function Site({ route = '/' }) {
          lets the header overflow it, so the plate below starts at y=0 no matter how tall the
          bar gets. The old fixed negative margin had to be retuned on every padding change. */}
       <div style={{ position: 'sticky', top: 0, zIndex: 20, height: heroRoute ? 0 : undefined }}>
-        <NavBar logoSrc="../../assets/vivum-logo-gray.svg" links={links} activeHref={route}
+        <NavBar logoSrc="../../assets/vivum-logo-gray.svg" logoHref={VV_B || './'} links={links} activeHref={route}
           transparent={heroRoute} onNavigate={go}
           cta={{ label: 'Contact us', onClick: () => go('/contact') }} />
       </div>
