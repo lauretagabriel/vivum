@@ -1,0 +1,8 @@
+/* Vivum AI — webfonts.
+   Inter (display + body) and IBM Plex Mono (specs, hex codes, telemetry) are served
+   from Google Fonts. No proprietary Vivum face was supplied with the source material;
+   if one exists, drop the binaries in assets/fonts/ and replace this import with
+   local @font-face rules. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* No icon webfont: icons are FontAwesome Light path data inlined in the bundle (see
+   components/core/Icon.jsx), so they need no network request and take `color` directly. */
