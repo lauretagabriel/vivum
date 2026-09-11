@@ -18,7 +18,7 @@ const SITE_PAGES = { '/': VV_B || './', '/autonomy': VV_B + 'autonomy/', '/about
 const VV_ROUTE_BY_URL = Object.keys(SITE_PAGES).reduce(function (a, k) { a[SITE_PAGES[k]] = k; return a; }, {});
 const SITE_SCREENS = { '/': 'HomeScreen', '/autonomy': 'AutonomyScreen', '/about': 'AboutScreen', '/contact': 'ContactScreen' };
 /* Routes whose first element is a full-bleed video plate — the bar floats over it. */
-const SITE_HERO_ROUTES = ['/', '/autonomy', '/about'];
+const SITE_HERO_ROUTES = ['/', '/autonomy', '/about', '/contact'];
 
 function Site({ route = '/' }) {
   const [booted, setBooted] = React.useState(() => window.__vvBooted === true);

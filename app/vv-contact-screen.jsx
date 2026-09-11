@@ -222,8 +222,8 @@ function ContactScreen({ onNavigate, onToast }) {
   );
 
   const headPad = mobile
-    ? 'clamp(44px, 11vw, 72px) var(--gutter-site) clamp(32px, 8vw, 44px)'
-    : 'clamp(52px, 5.4vw, 92px) var(--gutter-site) clamp(34px, 3.6vw, 52px)';
+    ? 'clamp(110px, 20vw, 140px) var(--gutter-site) clamp(32px, 8vw, 44px)'
+    : 'clamp(150px, 12vw, 180px) var(--gutter-site) clamp(34px, 3.6vw, 52px)';
   const formPad = mobile
     ? '0 var(--gutter-site) clamp(72px, 16vw, 112px)'
     : '0 var(--gutter-site) clamp(52px, 5.6vw, 100px)';

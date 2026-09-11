@@ -2051,7 +2051,7 @@ function NavBar({
   links = [],
   activeHref,
   cta,
-  transparent,
+  transparent = true,
   glassAt = GLASS_AT,
   onNavigate,
   style,
@@ -11892,7 +11892,7 @@ function ContactScreen({
   }, framed(formPane)), /*#__PURE__*/React.createElement("div", {
     style: cell('2')
   }, rail))));
-  const headPad = mobile ? 'clamp(44px, 11vw, 72px) var(--gutter-site) clamp(32px, 8vw, 44px)' : 'clamp(52px, 5.4vw, 92px) var(--gutter-site) clamp(34px, 3.6vw, 52px)';
+  const headPad = mobile ? 'clamp(110px, 20vw, 140px) var(--gutter-site) clamp(32px, 8vw, 44px)' : 'clamp(150px, 12vw, 180px) var(--gutter-site) clamp(34px, 3.6vw, 52px)';
   const formPad = mobile ? '0 var(--gutter-site) clamp(72px, 16vw, 112px)' : '0 var(--gutter-site) clamp(52px, 5.6vw, 100px)';
 
   /* `grid` and `field` are the two remaining canvas treatments — the moving-plate video is
@@ -18514,7 +18514,7 @@ const SITE_SCREENS = {
   '/contact': 'ContactScreen'
 };
 /* Routes whose first element is a full-bleed video plate — the bar floats over it. */
-const SITE_HERO_ROUTES = ['/', '/autonomy', '/about'];
+const SITE_HERO_ROUTES = ['/', '/autonomy', '/about', '/contact'];
 function Site({
   route = '/'
 }) {
